@@ -19,6 +19,7 @@
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/wizard.css" />
+  
 
 </head>
 
@@ -138,15 +139,60 @@
                         </small>
                         <input type="checkbox" onclick="toggle()" id="check"/> <span>Show
                           Password<span class="require">*</span></span>
-                    <div class="mb-3">
-                         <textarea
-                          class="form-control"
-                          placeholder="Enter address"
-                          id="address"
-                          autocomplete="off"
+
+                          <label class="hide">Address</label>
+                          <div class="errorMesg">
+                            <textarea
+                            name="address"
+                            id="address"
+                            rows="2"
+                            cols="42"
+                            placeholder="Address"
+                            required
+                            oninvalid="this.setCustomValidity('Please enter your address')"
+                            oninput="this.setCustomValidity('')"
+                            style="border: 1px solid #1758c1; padding: 5px; background-color: aliceblue; outline: none;"
+                            onfocus="this.style.border='1px solid #1758c1';"
+                            onblur="this.style.border='1px solid #1758c1';"
+                            maxlength="100"
+                            oninput="updateCounter(this)"
                           ></textarea>
-                         <div class="fs-6 fw-light" id="charCount"></div>
-                      </div>
+                          <div id="addressCounter">0/100</div>
+                          
+                          <script>
+                            function updateCounter(textarea) {
+                              var counter = document.getElementById('addressCounter');
+                              counter.textContent = textarea.value.length + '/' + textarea.getAttribute('maxlength');
+                            }
+                          
+                            // Set initial counter value
+                            updateCounter(document.getElementById('address'));
+                          
+                            // Set max value to 100
+                            document.getElementById('address').addEventListener('input', function () {
+                              if (this.value.length > 100) {
+                                this.value = this.value.substring(0, 100);
+                              }
+                              updateCounter(this);
+                            });
+                          
+                            // Reset textarea and counter on page load
+                            window.onload = function () {
+                              document.getElementById('address').value = '';
+                              updateCounter(document.getElementById('address'));
+                            };
+                          </script>                           
+                          </div>
+
+                        <label for="city" class="hide">City</label>
+                          <div class="errorMesg">
+                            <select id="city" name="city" required oninvalid="this.setCustomValidity('Please select city')"
+                            oninput="this.setCustomValidity('')">
+                               <option value="" disabled selected>Select City</option>
+                               <option value="newyork">New York</option>
+                               <option value="losangeles">Los Angeles</option>
+                            </select>
+                       </div>
                         
                         
                       </div>
@@ -239,19 +285,7 @@
     </div>
   </main>
 
-  <footer class="footer footer-dark">
-    <div class="d-flex justify-content-between px-5">
-      <div>ALL RIGHTS RESERVED BRS STUDIO 2022</div>
-      <div>
-        <button onclick="setTheme('#1A4B84')" class="theme-switch theme-switch-chathams_blue"></button>
-        <button onclick="setTheme('#991E14')" class="theme-switch theme-switch-tamarillo"></button>
-        <button onclick="setTheme('#FEAD06')" class="theme-switch theme-switch-yellow_sea"></button>
-      </div>
-      <div>
-        <img src="assets/img/footer-logo.png" alt="logo" />
-      </div>
-    </div>
-  </footer>
+  
 
 </body>
 <script defer src="assets/js/signup-step1.js"></script>
